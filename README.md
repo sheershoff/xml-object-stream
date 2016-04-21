@@ -37,6 +37,11 @@ If set to true, the xpath-ish query will be case-insensitive. Non-strict mode en
 
 If the callback function accepts a done callback, then xml will be processed *chunk* characters at a time. So, there will be a short flood of match callbacks and the xml processor will wait until all of the callbacks are complete before releasing the next chunk. This is convenient for processing very large xml files with callbacks that do a lot of I/O. Instead of firing and queuing tons of callbacks while the rest of xml processing uses the cpu, the xml processor yields control until all of the callbacks are done for each chunk.
 
+### concat
+**default: false**
+
+If set to true, the text in the tags on text event gets concatenated with concat method, which is slower and more CPU consuming, but more memory effective, since the + operator on strings stores the concatenated strings as a linked list instead of immediate concatenation. Turn it on for large XMLs with lots of text between many nodes in low-RAM environments.
+
 ## Arguments
 
 function(xml, xpath[, callback]);

@@ -98,7 +98,8 @@ module.exports = function(config) {
       strict = cfg.strict === undefined ? true : cfg.strict,
       icase = cfg.icase || true,
       pojo = cfg.pojo || false,
-      chunkSize = cfg.chunk || 8196;
+      chunkSize = cfg.chunk || 8196,
+      concat = cfg.concat || false;
 
   return function(xml, pattern, cb) {
     var stream = sax.createStream(strict, cfg);
@@ -212,7 +213,12 @@ module.exports = function(config) {
       var n = current();
       if (!!n) {
         if (!n.text) n.text = txt;
-        else n.text += txt;
+        else {
+          if(concat)
+            n.text = n.text.concat(txt);
+          else
+            n.text += txt;
+        }
       }
     });
 
